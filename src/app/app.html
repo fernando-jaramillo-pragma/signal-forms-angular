@@ -1,1 +1,89 @@
-<h1>Hiola</h1>
+<section class="container my-4">
+  <h1>Validaciones personalizadas con Signals Forms</h1>
+  <p>
+    El proposito de este ejemplo es demostrar cómo crear validaciones personalizadas utilizando la
+    nueva API de Signals Forms en Angular 20+.
+  </p>
+  <hr />
+</section>
+
+<section class="container mb-4">
+  <div class="form-card">
+    <h2>Crear Cuenta</h2>
+
+    <form autocomplete="off" (submit)="onSubmit($event)">
+      <div class="form-group">
+        <!-- Se crea variable para el campo de nombre de usuario y su estado de error -->
+        @let username = form.username(); @let showUsernameError = username.invalid() &&
+        username.touched();
+        <label for="username">Nombre de usuario</label>
+
+        <!-- Campo de entrada para el nombre de usuario, donde se enlaza el formField desde Signals Forms y se aplica la clase de error si es necesario -->
+        <input
+          type="text"
+          id="username"
+          [formField]="form.username"
+          [class.error]="showUsernameError"
+          (blur)="touched.set(true)"
+          class="form-input"
+          autocomplete="none"
+          autofill="none"
+        />
+
+        <!-- Mensaje de error condicional que se muestra si el campo es inválido y ha sido tocado -->
+        @if (showUsernameError) {
+        <span class="error-message">
+          {{ getUsernameError() }}
+        </span>
+        }
+      </div>
+
+      <div class="form-group">
+        <!-- Se crea variable para el campo de correo electrónico y su estado de error -->
+        @let email = form.email(); @let showEmailError = email.invalid() && email.touched();
+        <label for="email">Correo electrónico</label>
+        <!-- Campo de entrada para el correo electrónico, donde se enlaza el formField desde Signals Forms y se aplica la clase de error si es necesario -->
+        <input
+          type="email"
+          id="email"
+          [formField]="form.email"
+          [class.error]="showEmailError"
+          class="form-input"
+          autocomplete="none"
+          autofill="none"
+        />
+        <!-- Mensaje de error condicional que se muestra si el campo es inválido y ha sido tocado -->
+        @if (showEmailError) {
+        <span class="error-message">
+          {{ getEmailError() }}
+        </span>
+        }
+      </div>
+
+      <button class="submit-button" type="submit" [disabled]="form().invalid()">
+        Crear Cuenta
+      </button>
+    </form>
+  </div>
+
+  <section>
+    @if (showSuccessAlert()) {
+    <div class="success-alert">
+      <div class="alert-content">
+        <h3>¡Cuenta creada exitosamente!</h3>
+        <p><strong>Datos enviados:</strong></p>
+        <p><strong>Nombre de usuario:</strong> {{ submittedData()?.username }}</p>
+        <p><strong>Correo:</strong> {{ submittedData()?.email }}</p>
+        <button class="close-button" (click)="closeAlert()">×</button>
+      </div>
+    </div>
+    }
+  </section>
+
+  <br />
+  <p>Valor del formulario</p>
+  <code>
+    <pre>{{ model() | json }}</pre>
+  </code>
+  <br />
+</section>
