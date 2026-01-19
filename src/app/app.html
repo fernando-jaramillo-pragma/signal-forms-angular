@@ -14,11 +14,13 @@
     <form autocomplete="off" (submit)="onSubmit($event)">
       <div class="form-group">
         <!-- Se crea variable para el campo de nombre de usuario y su estado de error -->
-        @let username = form.username(); @let showUsernameError = username.invalid() &&
-        username.touched();
+        @let username = form.username();
+        @let showUsernameError = username.invalid() && username.touched();
         <label for="username">Nombre de usuario</label>
 
-        <!-- Campo de entrada para el nombre de usuario, donde se enlaza el formField desde Signals Forms y se aplica la clase de error si es necesario -->
+        <!-- Campo de entrada para el nombre de usuario, donde
+  se enlaza el formField desde Signals Forms y se aplica
+  la clase de error si es necesario -->
         <input
           type="text"
           id="username"
@@ -32,9 +34,9 @@
 
         <!-- Mensaje de error condicional que se muestra si el campo es inválido y ha sido tocado -->
         @if (showUsernameError) {
-        <span class="error-message">
-          {{ getUsernameError() }}
-        </span>
+          <span class="error-message">
+            {{ getUsernameError() }}
+          </span>
         }
       </div>
 
@@ -54,9 +56,9 @@
         />
         <!-- Mensaje de error condicional que se muestra si el campo es inválido y ha sido tocado -->
         @if (showEmailError) {
-        <span class="error-message">
-          {{ getEmailError() }}
-        </span>
+          <span class="error-message">
+            {{ getEmailError() }}
+          </span>
         }
       </div>
 
@@ -68,15 +70,15 @@
 
   <section>
     @if (showSuccessAlert()) {
-    <div class="success-alert">
-      <div class="alert-content">
-        <h3>¡Cuenta creada exitosamente!</h3>
-        <p><strong>Datos enviados:</strong></p>
-        <p><strong>Nombre de usuario:</strong> {{ submittedData()?.username }}</p>
-        <p><strong>Correo:</strong> {{ submittedData()?.email }}</p>
-        <button class="close-button" (click)="closeAlert()">×</button>
+      <div class="success-alert">
+        <div class="alert-content">
+          <h3>¡Cuenta creada exitosamente!</h3>
+          <p><strong>Datos enviados:</strong></p>
+          <p><strong>Nombre de usuario:</strong> {{ submittedData()?.username }}</p>
+          <p><strong>Correo:</strong> {{ submittedData()?.email }}</p>
+          <button class="close-button" (click)="closeAlert()">×</button>
+        </div>
       </div>
-    </div>
     }
   </section>
 
